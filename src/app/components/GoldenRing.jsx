@@ -1,0 +1,120 @@
+"use client";
+
+import React, { useRef } from 'react';
+import { useGLTF } from '@react-three/drei';
+import * as THREE from 'three';
+
+export function GoldenRing(props) {
+  const { nodes, materials } = useGLTF('/obj/sasha.glb', true);
+
+  // Create premium dark material with enhanced silver-like reflections
+  const goldMaterial = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#1A1A1A'),  // Darker base color for premium look
+    metalness: 0.9,      // Higher metalness for premium silver appearance
+    roughness: 0.15,     // Lower roughness for sharper reflections
+    reflectivity: 1.0,   // Maximum reflectivity
+    clearcoat: 0.7,      // Stronger clearcoat for premium look
+    clearcoatRoughness: 0.1, // Smoother clearcoat
+    envMapIntensity: 1.5, // Enhanced environment map reflections
+    transparent: true,    // Enable transparency
+    opacity: 0.95,        // Slight transparency for depth
+    transmission: 0.05,   // Minimal transmission effect
+    ior: 2.5,             // Higher index of refraction for premium look
+    specularIntensity: 1.3, // Enhanced specular highlights
+    specularColor: new THREE.Color('#CCCCCC'), // Silver-like specular color
+    sheen: 0.05,           // Subtle sheen effect for premium finish
+    sheenRoughness: 0.3,
+    sheenColor: new THREE.Color('#EFEFEF')
+  });
+
+  // Create premium dark gem material with enhanced contrast and sparkle
+  const whiteDiamondMaterial = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#555555'),  // Mid-dark gray for subtle contrast
+    metalness: 0.7,
+    roughness: 0.05,       // Very low roughness for brilliant shine
+    envMapIntensity: 2.0,  // Enhanced environment reflections
+    transparent: true,
+    opacity: 0.9,          // Better visibility with slight transparency
+    transmission: 0.2,     // Controlled light transmission
+    clearcoat: 1.0,        // Maximum clearcoat
+    clearcoatRoughness: 0.0, // Perfect clearcoat for premium shine
+    ior: 2.6,              // Diamond-like refraction
+    reflectivity: 1.0,     // Maximum reflectivity
+    specularIntensity: 1.7, // High specular intensity for visible sparkle
+    specularColor: new THREE.Color('#EEEEEE'), // Bright specular highlight
+    attenuationColor: new THREE.Color('#333333'),
+    attenuationDistance: 0.2,
+    thickness: 0.2,
+    sheen: 0.1,            // Subtle sheen
+    sheenColor: new THREE.Color('#FFFFFF')
+  });
+
+  return (
+    <group {...props} dispose={null}>
+      <group position={[0.02, 1.109, -0.491]} rotation={[2.443, 0, -Math.PI / 2]} scale={1.109}>
+        {/* Main ring body - gold */}
+        <mesh geometry={nodes.Circle007.geometry} material={goldMaterial} castShadow receiveShadow />
+        {/* Gemstones - white diamonds */}
+        <mesh geometry={nodes.Circle007_1.geometry} material={whiteDiamondMaterial} castShadow receiveShadow />
+      </group>
+      {/* Rest of the meshes use gold material */}
+      <mesh geometry={nodes.Plane.geometry} material={goldMaterial} position={[0.006, 1.864, 0.413]} rotation={[0.873, Math.PI / 2, 0]} scale={0.067} castShadow receiveShadow />
+      <mesh geometry={nodes.Cube.geometry} material={goldMaterial} position={[0.01, 1.663, 0.453]} rotation={[1.076, Math.PI / 2, 0]} scale={[0.06, 0.132, 0.194]} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane001.geometry} material={goldMaterial} position={[-0.055, 2.037, 0.056]} rotation={[0.552, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane002.geometry} material={goldMaterial} position={[-0.084, 2.117, -0.107]} rotation={[0.369, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane003.geometry} material={goldMaterial} position={[-0.114, 2.162, -0.268]} rotation={[0.197, 1.571, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane004.geometry} material={goldMaterial} position={[-0.138, 2.179, -0.426]} rotation={[0.009, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane005.geometry} material={goldMaterial} position={[-0.157, 2.169, -0.591]} rotation={[-0.123, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane006.geometry} material={goldMaterial} position={[-0.174, 2.137, -0.761]} rotation={[-0.225, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane007.geometry} material={goldMaterial} position={[-0.186, 2.078, -0.924]} rotation={[-0.41, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane008.geometry} material={goldMaterial} position={[-0.192, 1.987, -1.084]} rotation={[-0.609, Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane010.geometry} material={goldMaterial} position={[0.095, 1.356, 0.554]} rotation={[1.376, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane011.geometry} material={goldMaterial} position={[0.123, 1.196, 0.575]} rotation={[1.519, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane012.geometry} material={goldMaterial} position={[0.144, 1.036, 0.576]} rotation={[1.665, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane013.geometry} material={goldMaterial} position={[0.172, 0.863, 0.54]} rotation={[1.848, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane014.geometry} material={goldMaterial} position={[0.189, 0.694, 0.484]} rotation={[1.983, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane015.geometry} material={goldMaterial} position={[0.2, 0.533, 0.395]} rotation={[2.12, -1.571, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Plane016.geometry} material={goldMaterial} position={[0.217, 0.377, 0.278]} rotation={[2.284, -Math.PI / 2, 0]} scale={0.03} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder.geometry} material={goldMaterial} position={[0.003, 1.947, 0.081]} rotation={[-2.596, 0.887, -Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder001.geometry} material={goldMaterial} position={[-0.087, 1.943, 0.08]} rotation={[0.093, 1.287, 0.585]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder002.geometry} material={goldMaterial} position={[-0.028, 2.033, -0.067]} rotation={[-2.767, 0.887, -Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder003.geometry} material={goldMaterial} position={[-0.093, 2.012, -0.036]} rotation={[0.953, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder004.geometry} material={goldMaterial} position={[-0.056, 2.087, -0.216]} rotation={[-3.071, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder005.geometry} material={goldMaterial} position={[-0.085, 2.111, -0.367]} rotation={[-3.071, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder006.geometry} material={goldMaterial} position={[-0.113, 2.106, -0.503]} rotation={[3.042, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder007.geometry} material={goldMaterial} position={[-0.125, 2.083, -0.689]} rotation={[3.042, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder008.geometry} material={goldMaterial} position={[-0.144, 2.044, -0.831]} rotation={[2.78, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder009.geometry} material={goldMaterial} position={[-0.154, 1.968, -0.991]} rotation={[2.62, 0.887, Math.PI]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder010.geometry} material={goldMaterial} position={[-0.121, 2.069, -0.186]} rotation={[0.712, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder011.geometry} material={goldMaterial} position={[-0.15, 2.099, -0.329]} rotation={[0.522, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder012.geometry} material={goldMaterial} position={[-0.176, 2.107, -0.486]} rotation={[0.382, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder013.geometry} material={goldMaterial} position={[-0.195, 2.089, -0.634]} rotation={[0.131, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder014.geometry} material={goldMaterial} position={[-0.213, 2.048, -0.797]} rotation={[0.131, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder015.geometry} material={goldMaterial} position={[-0.226, 1.987, -0.941]} rotation={[-0.078, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder016.geometry} material={goldMaterial} position={[-0.235, 1.893, -1.084]} rotation={[-0.183, -0.907, 0.549]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder017.geometry} material={goldMaterial} position={[0.008, 1.537, 0.424]} rotation={[1.169, -0.804, -0.04]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder018.geometry} material={goldMaterial} position={[0.097, 1.543, 0.415]} rotation={[-1.225, -1.341, -2.284]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder019.geometry} material={goldMaterial} position={[0.121, 1.429, 0.458]} rotation={[-1.715, 1.16, 3.037]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder020.geometry} material={goldMaterial} position={[0.033, 1.403, 0.48]} rotation={[1.475, -1.051, -0.011]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder021.geometry} material={goldMaterial} position={[0.144, 1.287, 0.501]} rotation={[-2.03, 1.05, -2.748]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder022.geometry} material={goldMaterial} position={[0.079, 1.25, 0.505]} rotation={[1.871, -0.697, 0.404]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder023.geometry} material={goldMaterial} position={[0.176, 1.145, 0.499]} rotation={[-1.643, 0.381, -2.848]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder024.geometry} material={goldMaterial} position={[0.197, 1.001, 0.495]} rotation={[-1.501, 0.381, -2.848]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder025.geometry} material={goldMaterial} position={[0.21, 0.832, 0.455]} rotation={[-1.431, 0.697, -2.724]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder026.geometry} material={goldMaterial} position={[0.218, 0.657, 0.387]} rotation={[-1.431, 0.697, -2.724]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder027.geometry} material={goldMaterial} position={[0.243, 0.536, 0.307]} rotation={[-1.106, 0.697, -2.724]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder028.geometry} material={goldMaterial} position={[0.24, 0.367, 0.18]} rotation={[-1.106, 0.697, -2.724]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder029.geometry} material={goldMaterial} position={[0.169, 0.367, 0.185]} rotation={[2.469, 0.904, -0.18]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder030.geometry} material={goldMaterial} position={[0.151, 0.62, 0.384]} rotation={[2.133, -0.934, -0.139]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder031.geometry} material={goldMaterial} position={[0.134, 0.782, 0.446]} rotation={[1.857, -0.934, -0.139]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder032.geometry} material={goldMaterial} position={[0.108, 0.95, 0.503]} rotation={[1.857, -0.934, -0.139]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Cylinder033.geometry} material={goldMaterial} position={[0.088, 1.101, 0.519]} rotation={[1.608, -0.934, -0.139]} scale={0.022} castShadow receiveShadow />
+      <mesh geometry={nodes.Проба.geometry} material={goldMaterial} position={[0.016, 0.247, -0.976]} rotation={[-1.025, 0, -2.726]} scale={0.002} castShadow receiveShadow />
+    </group>
+  );
+}
+
+// Preload the model with priority
+useGLTF.preload('/obj/sasha.glb', true);
+
+export default GoldenRing;

@@ -1,12 +1,13 @@
 // src/app/components/ResponsiveRing.jsx
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Fragment } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, useHelper } from '@react-three/drei';
 import { Model } from './Alliance_White_Gold_Ring';
 import ScrollTriggeredDissolveMaterial from './ScrollTriggeredDissolveMaterial';
 import RingDustParticles from './RingDustParticles';
+import DiamondDustParticles from './DiamondDustParticles';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -72,7 +73,7 @@ const Scene = () => {
   });
 
   return (
-    <>
+    <Fragment>
       {/* Ambient light for base illumination */}
       <ambientLight intensity={0.3} color="#ffffff" />
       
@@ -96,10 +97,18 @@ const Scene = () => {
       {/* Adding environment lighting for realistic reflections */}
       <Environment preset="sunset" />
       
-      {/* Ring dust particles */}
+      {/* Ring dust particles - increased count and size */}
       <RingDustParticles 
-        count={3000}
+        count={4500}
         color="#f0f0f8"
+        size={0.025}
+      />
+      
+      {/* Diamond dust particles with red and blue sparkle effect */}
+      <DiamondDustParticles
+        count={2500}
+        color="#ff2040"
+        sparkleColor="#2040ff"
         size={0.02}
       />
       
@@ -109,6 +118,7 @@ const Scene = () => {
           <ScrollTriggeredDissolveMaterial 
             color="#ffffff"
             emissiveColor="#9fa4c4"
+            emissiveIntensity={1.0}
             noiseScale={15.0}
             metalness={0.8}
             roughness={0.2}
@@ -130,7 +140,7 @@ const Scene = () => {
         enableDamping={true}
         dampingFactor={0.05}
       />
-    </>
+    </Fragment>
   );
 };
 
