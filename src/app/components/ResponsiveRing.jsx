@@ -1,4 +1,3 @@
-// src/app/components/ResponsiveRing.jsx
 'use client';
 
 import React, { useRef, useEffect, useState, Fragment } from 'react';

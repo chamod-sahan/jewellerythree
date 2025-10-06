@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
-// Custom transparent diamond material with red and blue sparkle effects
 export default function DiamondDissolveMaterial({
   blueSparkle = true,
   redSparkle = true,
