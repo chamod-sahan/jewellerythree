@@ -13,9 +13,13 @@ export default function RingDustParticles({ count = 2000, color = '#ffffff', siz
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 1.5; // Full effect after 1.5 screen heights of scrolling
+      const maxScroll = windowHeight * 1.2; // Match the dissolve timing
       
-      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      // Apply the same easing as dissolve effect
+      let progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      // Apply cubic easing for more dramatic effect
+      progress = progress * progress * (3 - 2 * progress);
+      
       setScrollProgress(progress);
     };
     

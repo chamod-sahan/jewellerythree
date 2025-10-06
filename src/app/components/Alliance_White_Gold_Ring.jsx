@@ -4,14 +4,16 @@ Command: npx gltfjsx@6.5.3 public/obj/Alliance_White_Gold_Ring.glb
 */
 
 import React from 'react';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useTexture } from '@react-three/drei';
+import DiamondDissolveMaterial from './DiamondDissolveMaterial';
+
 
 // Preload the model
 useGLTF.preload('/obj/Alliance_White_Gold_Ring.glb');
 
 export function Model({ children }) {
   const { nodes, materials } = useGLTF('/obj/Alliance_White_Gold_Ring.glb');
-  
+  const texture = useTexture("/obj/rse.png");
   // Render the model with children as material
   return (
     <group dispose={null}>
@@ -19,17 +21,20 @@ export function Model({ children }) {
         geometry={nodes.Ring.geometry} 
         position={[-0.012, 0.643, 0.003]}
       >
+        {/* Apply the dissolve material to the main ring body */}
         {children}
+        
         <mesh geometry={nodes.Diamond_Holder.geometry}>
+          {/* Apply the dissolve material to the diamond holders */}
           {children}
         </mesh>
+        
         <mesh geometry={nodes.Diamonds.geometry}>
-          <meshStandardMaterial 
-            color="#ffffff" 
-            emissive="#ffffff"
-            emissiveIntensity={0.2}
-            roughness={0.1}
-            metalness={0.9}
+          {/* Apply transparent diamond material with blue and red sparkles */}
+          <DiamondDissolveMaterial 
+            blueSparkle={true}
+            redSparkle={true}
+            transparency={0.7}
           />
         </mesh>
       </mesh>

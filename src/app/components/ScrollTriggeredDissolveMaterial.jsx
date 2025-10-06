@@ -8,15 +8,16 @@ import { useFrame } from '@react-three/fiber';
 export default function ScrollTriggeredDissolveMaterial({
   color = '#ffffff',
   emissiveColor = '#9fa4c4',
-  noiseScale = 20.0,
-  metalness = 0.8,
-  roughness = 0.2,
-  glowWidth = 0.1,
-  glowIntensity = 2.0,
-  noiseDetail = 2.0,
-  dustScale = 0.2,
-  dustAmount = 0.5,
-  dustSpeed = 0.1
+  emissiveIntensity = 1.0,
+  noiseScale = 40.0,
+  metalness = 0.6,
+  roughness = 0.4,
+  glowWidth = 0.3,
+  glowIntensity = 3.0,
+  noiseDetail = 4.0,
+  dustScale = 0.5,
+  dustAmount = 0.8,
+  dustSpeed = 0.05
 }) {
   const matRef = useRef();
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -27,9 +28,14 @@ export default function ScrollTriggeredDissolveMaterial({
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const maxScroll = windowHeight * 1.5; // Full effect after 1.5 screen heights of scrolling
+      // Reduce maxScroll to make the dissolve effect complete more quickly
+      const maxScroll = windowHeight * 1.2; // Full effect after 1.2 screen heights of scrolling
       
-      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      // Increase the progression speed by applying an easing function
+      let progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      // Apply easing to make the dissolve more dramatic (cubic easing)
+      progress = progress * progress * (3 - 2 * progress);
+      
       setScrollProgress(progress);
     };
     
@@ -45,6 +51,7 @@ export default function ScrollTriggeredDissolveMaterial({
         uNoiseScale: { value: noiseScale },
         uColor: { value: new THREE.Color(color) },
         uEmissive: { value: new THREE.Color(emissiveColor) },
+        uEmissiveIntensity: { value: emissiveIntensity },
         uMetalness: { value: metalness },
         uRoughness: { value: roughness },
         uGlowWidth: { value: glowWidth },
@@ -72,6 +79,7 @@ export default function ScrollTriggeredDissolveMaterial({
         uniform float uNoiseScale;
         uniform vec3 uColor;
         uniform vec3 uEmissive;
+        uniform float uEmissiveIntensity;
         uniform float uMetalness;
         uniform float uRoughness;
         uniform float uGlowWidth;
@@ -143,11 +151,12 @@ export default function ScrollTriggeredDissolveMaterial({
           // Combine noise patterns
           float finalNoise = mix(noiseBase, detailNoise, 0.3);
           
-          // Calculate dissolution threshold based on progress
-          float threshold = smoothstep(0.0, 1.0, uDissolveProgress);
+          // Calculate dissolution threshold based on progress with more aggressive dissolve
+          float threshold = smoothstep(0.0, 0.8, uDissolveProgress * 1.2);
           
-          // Calculate edge glow
-          float edge = smoothstep(threshold, threshold + uGlowWidth, finalNoise);
+          // Calculate edge glow with wider glow at high dissolve progress
+          float edgeWidth = mix(uGlowWidth, uGlowWidth * 1.5, uDissolveProgress);
+          float edge = smoothstep(threshold, threshold + edgeWidth, finalNoise);
           
           // Calculate dust effect (more visible as dissolution progresses)
           float dustEffect = dust(vPosition, mix(1.0, 0.4, uDissolveProgress));
@@ -163,10 +172,10 @@ export default function ScrollTriggeredDissolveMaterial({
           float spec = pow(max(dot(vNormal, halfDir), 0.0), 32.0) * uMetalness;
           
           // Combine all lighting effects
-          vec3 finalColor = diffuse + (spec * uColor) + (edge * uEmissive * uGlowIntensity);
+          vec3 finalColor = diffuse + (spec * uColor) + (edge * uEmissive * uGlowIntensity * uEmissiveIntensity);
           
           // Apply dust effect to color
-          finalColor = mix(finalColor, uEmissive * 0.8, dustEffect * uDissolveProgress);
+          finalColor = mix(finalColor, uEmissive * 0.8 * uEmissiveIntensity, dustEffect * uDissolveProgress);
           
           // Discard fragments based on noise and progress
           if (finalNoise < threshold) {
@@ -182,7 +191,8 @@ export default function ScrollTriggeredDissolveMaterial({
     });
   }, [
     color, 
-    emissiveColor, 
+    emissiveColor,
+    emissiveIntensity,
     noiseScale, 
     metalness, 
     roughness, 

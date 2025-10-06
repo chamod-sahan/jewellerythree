@@ -1,4 +1,3 @@
-// src/app/components/DissolveMaterial.jsx
 'use client';
 
 import * as THREE from 'three';
