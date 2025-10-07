@@ -6,6 +6,8 @@ import ResponsiveRing from "./components/ResponsiveRing";
 import Welcome from "./components/Welcome";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Services from "./components/utils/services";
+import CollectionsPage from "./components/utils/collectio";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -60,25 +62,10 @@ export default function Main() {
                         Discover our handcrafted pieces made with the finest materials
                     </p>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                        {/* Sample product cards - you can expand these */}
-                        <div className="bg-gray-800 bg-opacity-50 rounded-lg p-6 hover:bg-opacity-70 transition-all duration-300">
-                            <h3 className="text-2xl font-semibold mb-2">Diamond Necklace</h3>
-                            <p className="text-gray-400 mb-4">Elegant and timeless design</p>
-                        </div>
-                        
-                        <div className="bg-gray-800 bg-opacity-50 rounded-lg p-6 hover:bg-opacity-70 transition-all duration-300">
-                            <h3 className="text-2xl font-semibold mb-2">Gold Bracelet</h3>
-                            <p className="text-gray-400 mb-4">Handcrafted with precision</p>
-                        </div>
-                        
-                        <div className="bg-gray-800 bg-opacity-50 rounded-lg p-6 hover:bg-opacity-70 transition-all duration-300">
-                            <h3 className="text-2xl font-semibold mb-2">Silver Earrings</h3>
-                            <p className="text-gray-400 mb-4">Modern and sophisticated</p>
-                        </div>
-                    </div>
+                    <CollectionsPage/>
                 </div>
             </section>
+            <Services/>
         </div>
     );
 }
